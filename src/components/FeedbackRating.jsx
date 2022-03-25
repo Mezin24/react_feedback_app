@@ -1,10 +1,10 @@
 import React, {useState} from 'react'
 
-function FeedbackRating({onChangerating}) {
+function FeedbackRating({rating}) {
 const [selected, setSelected] = useState(10)
 const handleChange = e => {
   setSelected(+e.target.value);
-  onChangerating(+e.target.value)
+  rating(+e.target.value)
 }
 
   return (

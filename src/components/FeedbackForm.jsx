@@ -26,15 +26,15 @@ function FeedbackForm({onAddFeedback}) {
     }
 
 
-    const changeRating = (value) => {
-        setRatingInput(value)
-    }
 
     const handleSubmit = e => {
         e.preventDefault()
-        onAddFeedback(textInput, ratingInput)
-        setTextInput('')
-        setRatingInput(10)
+
+        if (textInput.trim().length > 10) {
+            onAddFeedback(textInput, ratingInput)
+            setTextInput('')
+            setRatingInput(10)
+        }
     }
 
 
@@ -42,7 +42,7 @@ function FeedbackForm({onAddFeedback}) {
         <Card>
             <form onSubmit={handleSubmit}>
                 <h2>How would you rate your service with us?</h2>
-                <FeedbackRating onChangerating={changeRating} />
+                <FeedbackRating rating={rating => setRatingInput(rating)} />
                 <div className="input-group">
                     <input
                         type="text"
