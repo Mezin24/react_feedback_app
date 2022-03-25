@@ -1,32 +1,14 @@
-import React, { useContext } from 'react'
 import { FeebdackProvider } from './components/context/FeedbackProvider'
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
-import nanoId from 'nano-id'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Header from './components/Header'
 import About from './pages/About'
 import FeedbackForm from './components/FeedbackForm'
 import FeedbackList from './components/FeedbackList'
 import FeedbackStats from './components/FeedbackStats'
 import AboutLink from './components/AboutLink'
-import data from './data/data'
 import './index.css'
 
 function App() {
-  const deleteFeedback = (id) => {
-    if (window.confirm('Are you sure want to delete?')) {
-      // setFeedback((prev) => prev.filter((el) => el.id !== id))
-    }
-  }
-
-  const addFeedback = (text, rating) => {
-    const newFeedback = {
-      id: nanoId(),
-      rating,
-      text,
-    }
-    // setFeedback((prevState) => [newFeedback, ...prevState])
-  }
-
   return (
     <FeebdackProvider>
       <Router>
@@ -38,9 +20,9 @@ function App() {
               exact
               element={
                 <>
-                  <FeedbackForm onAddFeedback={addFeedback} />
+                  <FeedbackForm />
                   <FeedbackStats />
-                  <FeedbackList onDeleteFeedback={deleteFeedback} />
+                  <FeedbackList />
                 </>
               }
             />

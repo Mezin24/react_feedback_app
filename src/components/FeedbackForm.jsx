@@ -1,61 +1,61 @@
-import nanoId from 'nano-id'
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import FeedbackContext from './context/FeedbackProvider'
 import FeedbackRating from './FeedbackRating'
 import Button from './UI/Button'
 import Card from './UI/Card'
 
-function FeedbackForm({onAddFeedback}) {
-    const [textInput, setTextInput] = useState('')
-    const [ratingInput, setRatingInput] = useState(10)
-    const [isDisabled, setIsDisabled] = useState(true)
-    const [message, setMessage] = useState('')
+function FeedbackForm() {
+  const { addFeedback } = useContext(FeedbackContext)
+  const [textInput, setTextInput] = useState('')
+  const [ratingInput, setRatingInput] = useState(10)
+  const [isDisabled, setIsDisabled] = useState(true)
+  const [message, setMessage] = useState('')
 
-    const changeHandler = (event) => {
-        const input = event.target.value
-        if (input === '') {
-            setIsDisabled(true)
-            setMessage(null)
-        } else if (input !== '' && input.trim().length < 10) {
-            setIsDisabled(true)
-            setMessage('You should write at least 10 characters')
-        } else {
-            setMessage(null)
-            setIsDisabled(false)
-        }
-        setTextInput(event.target.value)
+  const changeHandler = (event) => {
+    const input = event.target.value
+    if (input === '') {
+      setIsDisabled(true)
+      setMessage(null)
+    } else if (input !== '' && input.trim().length < 10) {
+      setIsDisabled(true)
+      setMessage('You should write at least 10 characters')
+    } else {
+      setMessage(null)
+      setIsDisabled(false)
     }
+    setTextInput(event.target.value)
+  }
 
+  const handleSubmit = (e) => {
+    e.preventDefault()
 
-
-    const handleSubmit = e => {
-        e.preventDefault()
-
-        if (textInput.trim().length > 10) {
-            onAddFeedback(textInput, ratingInput)
-            setTextInput('')
-            setRatingInput(10)
-        }
+    if (textInput.trim().length > 10) {
+      addFeedback(textInput, ratingInput)
+      setTextInput('')
+      setRatingInput(10)
     }
+  }
 
-
-    return (
-        <Card>
-            <form onSubmit={handleSubmit}>
-                <h2>How would you rate your service with us?</h2>
-                <FeedbackRating rating={rating => setRatingInput(rating)} />
-                <div className="input-group">
-                    <input
-                        type="text"
-                        placeholder="Enter your text"
-                        value={textInput}
-                        onChange={changeHandler}
-                    />
-                    <Button isDisabled={isDisabled} type='submit'>Send</Button>
-                </div>
-                {message && <p className="message">{message}</p>}
-            </form>
-        </Card>
-    )
+  return (
+    <Card>
+      <form onSubmit={handleSubmit}>
+        <h2>How would you rate your service with us?</h2>
+        <FeedbackRating rating={(rating) => setRatingInput(rating)} />
+        <div className="input-group">
+          <input
+            type="text"
+            placeholder="Enter your text"
+            value={textInput}
+            onChange={changeHandler}
+          />
+          <Button isDisabled={isDisabled} type="submit">
+            Send
+          </Button>
+        </div>
+        {message && <p className="message">{message}</p>}
+      </form>
+    </Card>
+  )
 }
 
 export default FeedbackForm
