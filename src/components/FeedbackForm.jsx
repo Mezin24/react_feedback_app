@@ -8,10 +8,11 @@ function FeedbackForm() {
     const [message, setMessage] = useState('')
 
     const changeHandler = (event) => {
-        if (textInput === '') {
+        const input = event.target.value
+        if (input === '') {
             setIsDisabled(true)
             setMessage(null)
-        } else if (textInput !== '' && textInput.trim().length < 10) {
+        } else if (input !== '' && input.trim().length < 10) {
             setIsDisabled(true)
             setMessage('You should write at least 10 characters')
         } else {
