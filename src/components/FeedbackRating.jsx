@@ -3,7 +3,7 @@ import React, {useState} from 'react'
 function FeedbackRating() {
 const [selected, setSelected] = useState(10)
 const handleChange = e => {
-  setSelected(e.target.value);
+  setSelected(+e.target.value);
 }
 
   return (
