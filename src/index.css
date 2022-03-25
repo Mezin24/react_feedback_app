@@ -52,6 +52,12 @@ header {
     text-align: center;
 }
 
+.msg {
+    text-align: center;
+    font-size: 2rem;
+    margin-top: 1em;
+}
+
 .rating {
     display: flex;
     align-items: center;
