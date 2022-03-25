@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import nanoId from 'nano-id'
 import Header from './components/Header'
+import About from './pages/About'
 import FeedbackForm from './components/FeedbackForm'
 import FeedbackList from './components/FeedbackList'
 import FeedbackStats from './components/FeedbackStats'
@@ -26,19 +28,28 @@ function App() {
   }
 
   return (
-    <>
+    <Router>
       <Header />
       <div className="container">
-        <FeedbackForm onAddFeedback={addFeedback} />
-        {feedback.length !== 0 && (
-          <FeedbackStats feedback={feedback} />
-        )}
-        <FeedbackList
-          feedback={feedback}
-          onDeleteFeedback={deleteFeedback}
-        />
+        <Routes>
+          <Route
+            path="/"
+            exact
+            element={
+              <>
+                <FeedbackForm onAddFeedback={addFeedback} />
+                {feedback.length !== 0 && <FeedbackStats feedback={feedback} />}
+                <FeedbackList
+                  feedback={feedback}
+                  onDeleteFeedback={deleteFeedback}
+                />
+              </>
+            }
+          />
+          <Route path="/about" exact element={<About />} />
+        </Routes>
       </div>
-    </>
+    </Router>
   )
 }
 
