@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 function FeedbackStats({ feedback }) {
     let averageRating = feedback.reduce(
@@ -10,10 +11,14 @@ function FeedbackStats({ feedback }) {
 
     return (
         <div className="feedback-stats">
-            <p>{feedback.length} Reviews</p>
-            <p>Average Rating: {averageRating}</p>
+            <h4>{feedback.length} Reviews</h4>
+            <h4>Average Rating: {averageRating}</h4>
         </div>
     )
+}
+
+FeedbackStats.propTypes = {
+    feedback: PropTypes.array.isRequired,
 }
 
 export default FeedbackStats
