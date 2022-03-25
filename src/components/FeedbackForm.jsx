@@ -4,8 +4,22 @@ import Card from './UI/Card'
 
 function FeedbackForm() {
     const [textInput, setTextInput] = useState('')
+    const [isDisabled, setIsDisabled] = useState(true)
+    const [message, setMessage] = useState('')
 
-    const changeHandler = (event) => setTextInput(event.target.value)
+    const changeHandler = (event) => {
+        if (textInput === '') {
+            setIsDisabled(true)
+            setMessage(null)
+        } else if (textInput !== '' && textInput.trim().length < 10) {
+            setIsDisabled(true)
+            setMessage('You should write at least 10 characters')
+        } else {
+            setMessage(null)
+            setIsDisabled(false)
+        }
+        setTextInput(event.target.value)
+    }
 
     return (
         <Card>
@@ -18,8 +32,9 @@ function FeedbackForm() {
                         value={textInput}
                         onChange={changeHandler}
                     />
-                    <Button isDisabled={textInput.length < 10}>Send</Button>
+                    <Button isDisabled={isDisabled}>Send</Button>
                 </div>
+                {message && <p className="message">{message}</p>}
             </form>
         </Card>
     )
