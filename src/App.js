@@ -6,6 +6,7 @@ import About from './pages/About'
 import FeedbackForm from './components/FeedbackForm'
 import FeedbackList from './components/FeedbackList'
 import FeedbackStats from './components/FeedbackStats'
+import AboutLink from './components/AboutLink'
 import data from './data/data'
 import './index.css'
 
@@ -49,6 +50,7 @@ function App() {
           <Route path="/about" exact element={<About />} />
         </Routes>
       </div>
+      <AboutLink />
     </Router>
   )
 }
