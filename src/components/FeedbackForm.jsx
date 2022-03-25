@@ -1,10 +1,12 @@
+import nanoId from 'nano-id'
 import React, { useState } from 'react'
 import FeedbackRating from './FeedbackRating'
 import Button from './UI/Button'
 import Card from './UI/Card'
 
-function FeedbackForm() {
+function FeedbackForm({onAddFeedback}) {
     const [textInput, setTextInput] = useState('')
+    const [ratingInput, setRatingInput] = useState(10)
     const [isDisabled, setIsDisabled] = useState(true)
     const [message, setMessage] = useState('')
 
@@ -23,11 +25,24 @@ function FeedbackForm() {
         setTextInput(event.target.value)
     }
 
+
+    const changeRating = (value) => {
+        setRatingInput(value)
+    }
+
+    const handleSubmit = e => {
+        e.preventDefault()
+        onAddFeedback(textInput, ratingInput)
+        setTextInput('')
+        setRatingInput(10)
+    }
+
+
     return (
         <Card>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <h2>How would you rate your service with us?</h2>
-                <FeedbackRating/>
+                <FeedbackRating onChangerating={changeRating} />
                 <div className="input-group">
                     <input
                         type="text"
@@ -35,7 +50,7 @@ function FeedbackForm() {
                         value={textInput}
                         onChange={changeHandler}
                     />
-                    <Button isDisabled={isDisabled}>Send</Button>
+                    <Button isDisabled={isDisabled} type='submit'>Send</Button>
                 </div>
                 {message && <p className="message">{message}</p>}
             </form>

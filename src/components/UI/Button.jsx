@@ -1,12 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-function Button({ type, isDisabled, children, variation }) {
+function Button({ type, isDisabled, children, variation, onClick }) {
     return (
         <button
             className={`btn btn-${variation}`}
             type={type}
             disabled={isDisabled}
+            onClick={onClick}
         >
             {children}
         </button>
@@ -25,6 +26,7 @@ Button.propTypes = {
     isDisabled: PropTypes.bool.isRequired,
     variation: PropTypes.string.isRequired,
     children: PropTypes.node.isRequired,
+    onClick: PropTypes.func
 }
 
 export default Button
