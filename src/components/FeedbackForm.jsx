@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import FeedbackRating from './FeedbackRating'
 import Button from './UI/Button'
 import Card from './UI/Card'
 
@@ -26,6 +27,7 @@ function FeedbackForm() {
         <Card>
             <form>
                 <h2>How would you rate your service with us?</h2>
+                <FeedbackRating/>
                 <div className="input-group">
                     <input
                         type="text"
