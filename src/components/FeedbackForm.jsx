@@ -1,13 +1,15 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
+import nanoId from 'nano-id'
 import FeedbackContext from './context/FeedbackProvider'
 import FeedbackRating from './FeedbackRating'
 import Button from './UI/Button'
 import Card from './UI/Card'
 
 function FeedbackForm() {
-  const { addFeedback } = useContext(FeedbackContext)
-  const [textInput, setTextInput] = useState('')
-  const [ratingInput, setRatingInput] = useState(10)
+  const { addFeedback, feedbackEdit, updateFeedback } =
+    useContext(FeedbackContext)
+  const [text, setText] = useState('')
+  const [rating, setRating] = useState(10)
   const [isDisabled, setIsDisabled] = useState(true)
   const [message, setMessage] = useState('')
 
@@ -23,16 +25,34 @@ function FeedbackForm() {
       setMessage(null)
       setIsDisabled(false)
     }
-    setTextInput(event.target.value)
+    setText(event.target.value)
   }
+
+  useEffect(() => {
+    if (feedbackEdit.edit === true) {
+      setText(feedbackEdit.item.text)
+      setRating(feedbackEdit.item.rating)
+    }
+  }, [feedbackEdit])
 
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    if (textInput.trim().length > 10) {
-      addFeedback(textInput, ratingInput)
-      setTextInput('')
-      setRatingInput(10)
+    const newFeedback = {
+      id: nanoId(),
+      rating,
+      text,
+    }
+
+    if (text.trim().length > 10) {
+      if (feedbackEdit.edit === true) {
+        updateFeedback(feedbackEdit.item.id, newFeedback)
+      } else {
+        addFeedback(newFeedback)
+      }
+
+      setText('')
+      setRating(10)
     }
   }
 
@@ -40,12 +60,12 @@ function FeedbackForm() {
     <Card>
       <form onSubmit={handleSubmit}>
         <h2>How would you rate your service with us?</h2>
-        <FeedbackRating rating={(rating) => setRatingInput(rating)} />
+        <FeedbackRating rating={(rating) => setRating(rating)} />
         <div className="input-group">
           <input
             type="text"
             placeholder="Enter your text"
-            value={textInput}
+            value={text}
             onChange={changeHandler}
           />
           <Button isDisabled={isDisabled} type="submit">
